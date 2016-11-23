@@ -21,8 +21,8 @@ var debug=true;
 var production=false;
 var commonPaths = ['./','./js/src/','./node_modules'];
 
-gulp.task('default', () => {
-
+gulp.task('common', () => {
+console.log('transpiling...')
     var b= browserify({
         entries: ['./index.js'],
         debug: debug,
@@ -41,7 +41,11 @@ gulp.task('default', () => {
     return result;
 });
 
+gulp.task('watch',()=>{
+    gulp.watch(['./*.js','./**/*.js','./**/**/*.js'], ['common']);
+})
 function err(e){
     console.log(e.lineNumber,e.message);
     this.emit('end');
 }
+gulp.task('default',['common','watch'])
